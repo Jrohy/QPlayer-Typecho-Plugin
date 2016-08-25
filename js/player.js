@@ -57,7 +57,7 @@
 
 		$('audio').remove();
 		loadMusic(track);
-		if (isPlaying == true) play();
+		play();
 	}
 
 	// Shuffle
@@ -142,6 +142,7 @@
 		var _i = i;
 		$(this).on('click', function(){
 			switchTrack(_i);
+			currentTrack = _i;
 		});
 	});
 
