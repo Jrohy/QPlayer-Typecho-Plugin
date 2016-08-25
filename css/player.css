@@ -1,0 +1,232 @@
+#QPlayer {
+	position:fixed;
+	overflow:hidden;
+	bottom:62px;
+	left:-250px;
+}
+#QPlayer .left {
+	float:left;
+	margin-top:8px;
+}
+#QPlayer .right {
+	float:right;
+	margin-top:-17px;
+}
+#player {
+	float:left;
+	width:250px;
+	height:60px;
+	margin:0 auto;
+	position:relative;
+	background:rgb(255,255,255);
+	box-sizing:border-box;
+}
+#player .cover {
+	background:rgba(0,0,0,0.5);
+	border:0px solid #333;
+	position:absolute;
+	left:0px;
+	overflow:hidden;
+	-moz-border-radius:50%;
+	-webkit-border-radius:50%;
+	-o-border-radius:50%;
+	-ms-border-radius:50%;
+	-khtml-border-radius:50%;
+	width:60px;
+	height:60px;
+	-moz-box-shadow:0 2px 2px #111;
+	-webkit-box-shadow:0 2px 2px #111;
+	-o-box-shadow:0 2px 2px #111;
+	box-shadow:0 2px 2px rgba(17,17,17,0)
+}
+#player .cover img {
+	height:100%;
+	border-radius:99%;
+}
+.contr {
+	text-align:center;
+	margin-top:8px;
+	position:relative;
+}
+#player .ctrl {
+	margin-left:60px;
+	line-height:14px;
+	font-size:14px;
+	margin-top:0px;
+	color:#636363;
+	padding:8px;
+}
+#player .ctrl .musicTag strong,#player .ctrl .musicTag span {
+	display:inline;
+	font-size:85%;
+	text-overflow:ellipsis;
+	width:80%;
+}
+#player .ctrl .musicTag span {
+	font-size:12px;
+	margin-top:5px;
+	color:#757575;
+}
+#player .ctrl .icon {
+	display:inline-block;
+	opacity:1;
+	cursor:pointer;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-webkit-user-select:none;
+	-o-user-select:none;
+	user-select:none;
+	background:url(../img/audio_sprite.png) no-repeat 0 9999px;
+}
+#player .ctrl .icon:hover,#player .ctrl .icon.enable {
+	opacity:1
+}
+#player .ctrl .icon:active {
+	opacity:0.3
+}
+.liebiao {
+	background-image:url(../img/liebiao.png);
+	background-position:-58px -14px !important;
+	width:13px;
+	height:10px;
+	position:absolute;
+	left:229px;
+	top:40px;
+}
+#player .ctrl .control {
+	margin-top:10px;
+	height:25px
+}
+.rewind {
+	background-position:-33px 0 !important;
+	width:9px;
+	height:10px;
+	position:absolute;
+	margin-top:4px;
+	left:70px;
+}
+.playback {
+	background-position:0 0 !important;
+	width:14px;
+	height:18px;
+}
+.playback.playing {
+	background-position:-36px -63px !important;
+	width:14px;
+	height:18px;
+	position:absolute;
+	left:92px;
+}
+.fastforward {
+	background-position:-58px 0 !important;
+	width:9px;
+	height:10px;
+	margin-top:4px;
+	position:absolute;
+	left:118px;
+}
+#player .ctrl .progress {
+	margin-top:12px;
+}
+#player .ctrl .progress .timer {
+	font-size:12px;
+	color:#5f5f5f;
+	margin:0;
+	vertical-align:middle;
+	line-height:18px;
+}
+#playlist {
+	display:none;
+	float:left;
+	box-sizing:border-box;
+	background:rgb(255,255,255);
+	width:250px;
+	margin:0;
+	padding:0;
+	position:relative;
+	border:1px solid #dedede;
+}
+#playlist li {
+	color:#989898;
+	font-size:11px;
+	line-height:2;
+	padding:3px 15px;
+	cursor:pointer;
+	text-overflow:ellipsis;
+	list-style-position:inside;
+	cursor:default;
+}
+#playlist li:hover {
+	color:#716e6e;
+	font-weight:bold;
+	border-left:3px solid #1abc9c;
+	padding:3px 15px 3px 11px;
+}
+#playlist li.playing {
+	color:#716e6e;
+	font-weight:bold;
+	border-left:3px solid #1abc9c;
+	padding:3px 15px 3px 11px;
+}
+#pContent {
+	width:270px;
+	box-shadow:blockbox-shadow:1px 0px 5px 2px rgb(36,95,88);
+}
+#pContent .ssBtn {
+	width:20px;
+	height:60px;
+	background:#1abc9c none repeat scroll 0% 0%;
+	position:relative;
+	right:0px;
+	bottom:0px;
+	box-sizing:border-box;
+	border-left:none;
+	cursor:pointer;
+	display:box-shadow:;
+	float:right;
+}
+#pContent .ssBtn .adf {
+	float:left;
+	width:20px;
+	height:20px;
+	top:20px;
+	position:relative;
+	background:transparent url("../img/2.png") repeat scroll 0% 0%;
+}
+#pContent .ssBtn .adf.on {
+	transform:rotate(180deg);
+	-webkit-transition:all .3s ease-out;
+	-moz-transition:all .3s ease-out;
+	-ms-transition:all .3s ease-out;
+	-o-transition:all .3s ease-out;
+	transition:all .3s ease-out;
+}
+@-webkit-keyframes rotate {
+	from {
+	-webkit-transform:rotate(0deg)
+}
+to {
+	-webkit-transform:rotate(360deg)
+}
+}@-moz-keyframes rotate {
+	from {
+	-moz-transform:rotate(0deg)
+}
+to {
+	-moz-transform:rotate(360deg)
+}
+}@-ms-keyframes rotate {
+	from {
+	-ms-transform:rotate(0deg)
+}
+to {
+	-ms-transform:rotate(360deg)
+}
+}@-o-keyframes rotate {
+	from {
+	-o-transform:rotate(0deg)
+}
+to {
+	-o-transform:rotate(360deg)
+}
+}
