@@ -4,7 +4,7 @@
  * 
  * @package QPlayer
  * @author 32mb
- * @version 1.2
+ * @version 1.1
  * @link https://32mb.space
  */
 class QPlayer_Plugin implements Typecho_Plugin_Interface
