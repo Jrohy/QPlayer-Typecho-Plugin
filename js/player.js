@@ -162,4 +162,5 @@
         1 == QPlayer_var.autoplay && $(a).trigger("play")	
 		}
 	}); 
+	
 })(jQuery);

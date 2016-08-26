@@ -145,6 +145,8 @@
 	padding:0;
 	position:relative;
 	border:1px solid #dedede;
+	max-height: 360px;
+	overflow: auto;
 }
 #playlist li {
 	color:#989898;
@@ -229,4 +231,26 @@ to {
 to {
 	-o-transform:rotate(360deg)
 }
+}
+
+
+/* 设置滚动条的样式 */
+#QPlayer ::-webkit-scrollbar {
+    width: 3px !important;
+}
+
+/* 滚动槽 */
+#QPlayer ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
+    border-radius: 10px !important;
+}
+
+/* 滚动条滑块 */
+#QPlayer ::-webkit-scrollbar-thumb {
+    border-radius: 10px !important;
+    background: rgba(0,0,0,0.1) !important;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5) !important;
+}
+#QPlayer ::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255,0,0,0.4) !important;
 }
