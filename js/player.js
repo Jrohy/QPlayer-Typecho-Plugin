@@ -3,7 +3,8 @@
 	var repeat = localStorage.repeat || 0,
 		shuffle = localStorage.shuffle || 'false',
 		volume = localStorage.volume || 0.5,
-		continous = true;
+		continous = true,
+		isFirstPlay = true;
 	// Load playlist
 	for (var i=0; i<playlist.length; i++){
 		var item = playlist[i];
@@ -23,6 +24,14 @@
 		$('.playback').addClass('playing');
 		timeout = setInterval(updateProgress, 500);
 		isPlaying = true;
+		if(isExceedTag()) {
+			if (isFirstPlay) {
+				initMarquee();
+				isFirstPlay = false;
+			} else {
+				$('.marquee').marquee('resume');
+		    }
+	    }
 	}
 
 	var pause = function(){
@@ -31,6 +40,9 @@
 		$('.playback').removeClass('playing');
 		clearInterval(updateProgress);
 		isPlaying = false;
+		if(isExceedTag()) {
+			$('.marquee').marquee('pause');
+		}
 	}
 
 	// Update progress
@@ -55,6 +67,7 @@
 			track = i;
 		}
 
+		isFirstPlay = true;
 		$('audio').remove();
 		loadMusic(track);
 		play();
@@ -115,6 +128,7 @@
 	}
 
 	loadMusic(currentTrack);
+
 	$('.playback').on('click', function(){
 		if ($(this).hasClass('playing')){
 			pause();
@@ -148,19 +162,44 @@
 
 	$('#QPlayer .liebiao,#QPlayer .liebiao').on('click', function(){
 		$('#playlist').slideToggle(350);
-	
 	});		
 
 	$("#QPlayer .ssBtn").on('click', function(){
 		var mA = $("#QPlayer");
 		if(mA.css('left')=="-250px"){			
 			mA.animate({ left: 0 }, "350");
-		$(' .ssBtn .adf').addClass('on')
+		    $(' .ssBtn .adf').addClass('on')
 		}else{
 			mA.animate({ left: "-250px" }, "350");			
-                             $(' .ssBtn .adf').removeClass('on') 
-        1 == QPlayer_var.autoplay && $(a).trigger("play")	
+            $(' .ssBtn .adf').removeClass('on') 
+            1 == QPlayer_var.autoplay && $(a).trigger("play")	
 		}
 	}); 
-	
+
 })(jQuery);
+
+
+
+function initMarquee(){
+	$('.marquee').marquee({
+	    //speed in milliseconds of the marquee
+	    duration: 15000,
+	    //gap in pixels between the tickers
+	    gap: 50,
+	    //time in milliseconds before the marquee will start animating
+	    delayBeforeStart: 0,
+	    //'left' or 'right'
+	    direction: 'left',
+	    //true or false - should the marquee be duplicated to show an effect of continues flow
+	    duplicated: true
+	});
+}
+
+//检测标题和作者信息总宽度是否超出播放器，超过则返回true开启跑马灯
+function isExceedTag() {
+	var isExceedTag = false;
+	if ($('.musicTag strong').width() + $('.musicTag span').width() + $('.musicTag .artist').width() > $('.musicTag').width()) {
+	    isExceedTag = true;
+	}
+	return isExceedTag;
+}

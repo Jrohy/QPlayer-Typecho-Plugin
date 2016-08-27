@@ -3,8 +3,8 @@
  * 简洁美观非常Qの悬浮音乐播放器
  * 
  * @package QPlayer
- * @author 32mb
- * @version 1.1
+ * @author Jrohy
+ * @version 1.1.2
  * @link https://32mb.space
  */
 class QPlayer_Plugin implements Typecho_Plugin_Interface
@@ -107,7 +107,7 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
 				<div id="player">
 					<span class="cover"></span>
 					<div class="ctrl">
-						<div class="musicTag">
+						<div class="musicTag marquee">
 							<strong>Title</strong>
 							 <span> - </span>
 							<span class="artist">Artist</span>
@@ -155,6 +155,7 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
               var isRotate = '.$options->rotate.';
             </script> ' . "\n";
 		echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/jquery-ui.min.js'.'"></script>' . "\n";
+        echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/jquery.marquee.min.js'.'"></script>' . "\n";
         echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/player.js'.'"></script>' . "\n";
         
     }
