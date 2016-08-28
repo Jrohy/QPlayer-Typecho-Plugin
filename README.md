@@ -1,5 +1,5 @@
 # QPlayer-Typecho-Plugin
-一款简洁的Typecho音乐播放器插件. 效果展示: https://32mb.space
+一款简洁的Typecho音乐播放器插件. 支持网易云音乐解析。效果展示: https://32mb.space
 
 ##使用方法
 Download ZIP, 解压，将 QPlayer-Typecho-Plugin-master 重命名为 QPlayer ，之后上传到你博客中的 /usr/plugins 目录，在后台启用即可
