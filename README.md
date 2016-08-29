@@ -12,7 +12,7 @@ Download ZIP, 解压，将 QPlayer-Typecho-Plugin-master 重命名为 QPlayer �
 {title:"xxx", artist:"xxx", cover:"http:xxxx", mp3:"http:xxxx"} ，每个歌曲之间用英文,隔开。
 **请保证歌曲列表里至少有一首歌**！
 
-##添加网易云音乐
+##添加网易云音乐(需主机支持curl扩展)
 去网易云音乐官网找到音乐id,支持单曲|艺人|专辑|歌单类型的id解析，billboard等排行榜也支持(实质就是歌单)。
 ![netEaseID][2]
 
