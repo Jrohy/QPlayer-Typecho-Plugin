@@ -40,10 +40,6 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
      * @return void
      */
     public static function config(Typecho_Widget_Helper_Form $form){
-        $jquery = new Typecho_Widget_Helper_Form_Element_Radio(
-        'jquery', array('0'=> '关闭', '1'=> '开启'), 0, 'jQuery加载',
-            '播放器需要jquery支持，若主题已包含jquery,则无需加载, 否则需要开启来加载插件自带的jquery。若遇到播放器无法操作也可能是播放器与主题包含的jquery不兼容，需要开启jquery加载');
-        $form->addInput($jquery);
 
         $autoPlay = new Typecho_Widget_Helper_Form_Element_Radio(
         'autoPlay', array('0'=> '关闭', '1'=> '开启'), 0, '自动播放',
@@ -148,9 +144,7 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
             }
             </style>';
         }
-        if($options->jquery == '1'){
-            echo '<script src="'. Helper::options()->pluginUrl . '/QPlayer/js/jquery.min.js' .'"></script>';
-        }
+        echo '<script src="'. Helper::options()->pluginUrl . '/QPlayer/js/jquery.min.js' .'"></script>';
         echo '
             <script>
               var autoplay = '.$options->autoPlay.';

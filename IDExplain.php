@@ -61,6 +61,7 @@
 
         #submit:hover {
             background-color: #4cb0f9;
+            cursor:pointer;
         }
         .mgr {
           position: relative;
