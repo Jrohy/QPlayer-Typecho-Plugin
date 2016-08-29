@@ -16,9 +16,10 @@ Download ZIP, 解压，将 QPlayer-Typecho-Plugin-master 重命名为 QPlayer �
 去网易云音乐官网找到音乐id,支持单曲|艺人|专辑|歌单类型的id解析，billboard等排行榜也支持(实质就是歌单)。
 ![netEaseID][2]
 
-建议网站加入PJAX来实现跨页面播放音乐[PJAX 实现无刷新加载网页][3]
-
 更多详细说明请参见插件后台。
+
+
+建议网站加入PJAX来实现跨页面播放音乐[PJAX 实现无刷新加载网页][3]
 
 
 
