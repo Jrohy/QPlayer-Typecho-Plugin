@@ -11,6 +11,15 @@
 		$('#playlist').append('<li class="lib"><strong style="margin-left: 5px;">'+item.title+'</strong><span style="float: right;" class="artist">'+item.artist+'</span></li>');
 	}
 
+    //判断是否显示滚动条
+	var totalHeight = 0;
+	for (var i = 0; i< playlist.length; i++){
+		totalHeight += ($('#playlist li').eq(i).height() + 6);
+	}
+	if (totalHeight > 360) {
+		$('#playlist').css("overflow", "auto");
+	}
+
 	var time = new Date(),
 		currentTrack = shuffle === 'true' ? time.getTime() % playlist.length : 0,
 		trigger = false,
@@ -152,32 +161,39 @@
 			switchTrack(++currentTrack);
 		}
 	});
+	
 	$('#playlist li').each(function(i){
-		var _i = i;
 		$(this).on('click', function(){
-			switchTrack(_i);
-			currentTrack = _i;
+			switchTrack(i);
+			currentTrack = i;
 		});
 	});
 
 	$('#QPlayer .liebiao,#QPlayer .liebiao').on('click', function(){
-		$('#playlist').slideToggle(350);
+		var pl = $('#playlist');
+		if (pl.hasClass('go') === false) {
+			pl.css({"max-height":"360px","transition":"max-height .5s ease"});		
+			pl.css("border", "1px solid #dedede");
+			pl.addClass('go');
+		} else {
+			pl.css({"max-height":"0px","transition":"max-height .5s ease"});
+			pl.css("border", "0");
+			pl.removeClass('go');
+		}
 	});		
 
 	$("#QPlayer .ssBtn").on('click', function(){
 		var mA = $("#QPlayer");
-		if(mA.css('left')=="-250px"){			
-			mA.animate({ left: 0 }, "350");
-		    $(' .ssBtn .adf').addClass('on')
-		}else{
-			mA.animate({ left: "-250px" }, "350");			
-            $(' .ssBtn .adf').removeClass('on') 
-            1 == QPlayer_var.autoplay && $(a).trigger("play")	
+		if ($('.ssBtn .adf').hasClass('on') === false) {
+			mA.css("transform", "translateX(250px)");
+		    $('.ssBtn .adf').addClass('on')
+		} else {	
+			mA.css("transform", "translateX(0px)");
+            $('.ssBtn .adf').removeClass('on') 	
 		}
 	}); 
 
 })(jQuery);
-
 
 
 function initMarquee(){
