@@ -3,6 +3,7 @@
 	overflow:hidden;
 	bottom:62px;
 	left:-250px;
+	transition:transform .5s ease;
 }
 #QPlayer .left {
 	float:left;
@@ -137,17 +138,14 @@
 	line-height:18px;
 }
 #playlist {
-	display:none;
 	float:left;
-	box-sizing:border-box;
 	background:rgb(255,255,255);
 	width:250px;
 	margin:0;
 	padding:0;
 	position:relative;
-	border:1px solid #dedede;
-	max-height: 360px;
-	overflow: auto;
+	max-height: 0;
+	overflow: hidden;
 }
 #playlist li {
 	color:#989898;
@@ -258,4 +256,9 @@ to {
 
 .marquee {
   overflow: hidden;
+}
+
+#player .ctrl .icon,#playlist li,#playlist li:hover:before, #playlist li:hover:after {
+    transition: .2s;
+    -webkit-font-smoothing: antialiased;
 }

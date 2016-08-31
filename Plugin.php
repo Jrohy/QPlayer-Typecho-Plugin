@@ -56,7 +56,7 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
 
         $getMusic = new Typecho_Widget_Helper_Form_Element_Radio('getMusic',NULL,NULL,_t('添加网易云音乐(主机需支持curl扩展)'),_t('
         	<div style="background-color:#467b96;padding:5px 8px;max-width:110px;border-radius: 2px;"><a href="'.Helper::options()->pluginUrl.'/QPlayer/IDExplain.php" target="_blank" style="font-size:14px;color:#fff;outline:none;text-decoration:none;">网易云音乐id解析</a>
-        	</div>请自行去网易云音乐网页版获取音乐id(<a href="https://32mb.space/archives/17.html" target="_blank">获取方法及解析原理</a>)。<b>将解析出的音乐链接复制到下面歌曲列表里</b>'));
+        	</div>请自行去网易云音乐网页版获取音乐id(具体在每个音乐项目的网址最后会有个id)。<b>将解析出的音乐链接复制到下面歌曲列表里(注意检查与现有歌曲是否用英文,隔开)</b>'));
         $form->addInput($getMusic);
 
         $musicList = new Typecho_Widget_Helper_Form_Element_Textarea('musicList', NULL, 
@@ -144,7 +144,7 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
             }
             </style>';
         }
-        echo '<script src="'. Helper::options()->pluginUrl . '/QPlayer/js/jquery.min.js' .'"></script>';
+        echo '<script src="'. Helper::options()->pluginUrl . '/QPlayer/js/jquery.min.js"></script>';
         echo '
             <script>
               var autoplay = '.$options->autoPlay.';
@@ -153,9 +153,9 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
               ];
               var isRotate = '.$options->rotate.';
             </script> ' . "\n";
-		echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/jquery-ui.min.js'.'"></script>' . "\n";
-        echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/jquery.marquee.min.js'.'"></script>' . "\n";
-        echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/player.js'.'"></script>' . "\n";
+		echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/jquery-ui.min.js"></script>' . "\n";
+        echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/jquery.marquee.min.js"></script>' . "\n";
+        echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/player.js"></script>' . "\n";
         
     }
 
