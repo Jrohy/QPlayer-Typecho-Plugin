@@ -4,7 +4,7 @@
  * 
  * @package QPlayer
  * @author Jrohy
- * @version 1.2.1
+ * @version 1.3
  * @link https://32mb.space
  */
 class QPlayer_Plugin implements Typecho_Plugin_Interface
@@ -51,8 +51,21 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
             '');
         $form->addInput($rotate);
 
-        $color = new Typecho_Widget_Helper_Form_Element_Text('color', NULL, '', _t('自定义主色调'), _t('默认为<span style="color: #1abc9c;">#1abc9c</span>, 你可以自定义任何你喜欢的颜色作为播放器主色调。自定义主色调必须使用 Hex Color, 即`#233333`或`#333`的格式。填写错误的格式可能不会生效。'));
-        $form->addInput($color);
+        $css = new Typecho_Widget_Helper_Form_Element_Textarea('css', NULL, '', _t('自定义CSS'),'');
+        $form->addInput($css);
+
+        $js = new Typecho_Widget_Helper_Form_Element_Textarea('js', NULL, 
+'//改变列表的背景颜色(错开颜色)，开启请删除注释
+/*
+function bgChange(){
+	var lis= $(".lib");
+	for(var i=0; i<lis.length; i+=2)
+	lis[i].style.background = "rgba(246, 246, 246, 0.5)";
+}
+window.onload = bgChange;
+*/
+', _t('自定义JS'),'');
+        $form->addInput($js);
 
         $getMusic = new Typecho_Widget_Helper_Form_Element_Radio('getMusic',NULL,NULL,_t('添加网易云音乐(主机需支持curl扩展)'),_t('
         	<div style="background-color:#467b96;padding:5px 8px;max-width:110px;border-radius: 2px;"><a href="'.Helper::options()->pluginUrl.'/QPlayer/IDExplain.php" target="_blank" style="font-size:14px;color:#fff;outline:none;text-decoration:none;">网易云音乐id解析</a>
@@ -63,15 +76,16 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
 '{
     title: "叫做你的那个人",
     artist: "Jessica",
-    cover: "https://obw915dkh.qnssl.com/cover/%E5%8F%AB%E5%81%9A%E4%BD%A0%E7%9A%84%E9%82%A3%E4%B8%AA%E4%BA%BA.jpg",
+    cover: "https://oceunit3e.qnssl.com/%E5%8F%AB%E5%81%9A%E4%BD%A0%E7%9A%84%E9%82%A3%E4%B8%AA%E4%BA%BA.jpg",
     mp3: "https://obw92zax9.qnssl.com/%E5%8F%AB%E5%81%9A%E4%BD%A0%E7%9A%84%E9%82%A3%E4%B8%AA%E4%BA%BA.mp3",
 },
 {
 	title: "如果",
 	artist: "金泰妍",
-	cover: "https://obw915dkh.qnssl.com/cover/%E5%A6%82%E6%9E%9C.jpg",
+	cover: "https://oceunit3e.qnssl.com/%E5%A6%82%E6%9E%9C.jpg",
 	mp3: "https://obw92zax9.qnssl.com/%E5%A6%82%E6%9E%9C.mp3",
-}',_t('歌曲列表'), _t('格式: {title:"xxx", artist:"xxx", cover:"http:xxxx", mp3:"http:xxxx"} ，每个歌曲之间用英文,隔开。请保证歌曲列表里至少有一首歌！'));
+}
+',_t('歌曲列表'), _t('格式: {title:"xxx", artist:"xxx", cover:"http:xxxx", mp3:"http:xxxx"} ，每个歌曲之间用英文,隔开。请保证歌曲列表里至少有一首歌！'));
         $form->addInput($musicList);
     }
     
@@ -134,15 +148,8 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
 			</div>
              ';
 
-        if($options->color != '') {
-            echo '<style>
-            #pContent .ssBtn {
-                background-color:'.$options->color.';
-            }
-            #playlist li.playing, #playlist li:hover{
-                border-left-color:'.$options->color.';
-            }
-            </style>';
+        if($options->css != '') {
+            echo '<style>'.$options->css.'</style>' . "\n";
         }
         echo '<script src="'. Helper::options()->pluginUrl . '/QPlayer/js/jquery.min.js"></script>';
         echo '
@@ -156,6 +163,9 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
 		echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/jquery-ui.min.js"></script>' . "\n";
         echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/jquery.marquee.min.js"></script>' . "\n";
         echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/player.js"></script>' . "\n";
+        if ($options->js != '') {
+            echo '<script>'.$options->js.'</script>' . "\n";
+        }
         
     }
 
