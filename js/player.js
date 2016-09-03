@@ -1,27 +1,29 @@
 (function($){
 	// Settings
 	var repeat = localStorage.repeat || 0,
-		shuffle = localStorage.shuffle || 'false',
 		volume = localStorage.volume || 0.5,
 		continous = true,
-		isFirstPlay = true;
+		isShuffle = false,
+		isFirstPlay = true,
+		shuffleArray = [],
+		shuffleIndex;
+
 	// Load playlist
-	for (var i=0; i<playlist.length; i++){
+	for (var i = 0; i < playlist.length; i++){
 		var item = playlist[i];
 		$('#playlist').append('<li class="lib"><strong style="margin-left: 5px;">'+item.title+'</strong><span style="float: right;" class="artist">'+item.artist+'</span></li>');
 	}
 
     //判断是否显示滚动条
 	var totalHeight = 0;
-	for (var i = 0; i< playlist.length; i++){
+	for (var i = 0; i < playlist.length; i++){
 		totalHeight += ($('#playlist li').eq(i).height() + 6);
 	}
 	if (totalHeight > 360) {
 		$('#playlist').css("overflow", "auto");
 	}
 
-	var time = new Date(),
-		currentTrack = shuffle === 'true' ? time.getTime() % playlist.length : 0,
+	var currentTrack = 0,
 		trigger = false,
 		audio, timeout, isPlaying, playCounts;
 
@@ -83,11 +85,21 @@
 	}
 
 	// Shuffle
-	var shufflePlay = function(){
-		var time = new Date(),
-			lastTrack = currentTrack;
-		currentTrack = time.getTime() % playlist.length;
-		if (lastTrack == currentTrack) ++currentTrack;
+	var shufflePlay = function(i){
+		if (i === 1) {
+		//下一首
+		    if (++shuffleIndex === shuffleArray.length) {
+		    	shuffleIndex = 0;
+		    }
+		    currentTrack = shuffleArray[shuffleIndex];
+
+		} else if (i === 0) {
+		//上一首
+		    if (--shuffleIndex < 0) {
+		    	shuffleIndex = shuffleArray.length - 1;
+		    }
+		    currentTrack = shuffleArray[shuffleIndex];
+		}
 		switchTrack(currentTrack);
 	}
 
@@ -100,8 +112,8 @@
 		if (repeat == 1){
 			play();
 		} else {
-			if (shuffle === 'true'){
-				shufflePlay();
+			if (isShuffle){
+				shufflePlay(1);
 			} else {
 				if (repeat == 2){
 					switchTrack(++currentTrack);
@@ -147,16 +159,16 @@
 	});
 
 	$('.rewind').on('click', function(){
-		if (shuffle === 'true'){
-			shufflePlay();
+		if (isShuffle){
+			shufflePlay(0);
 		} else {
 			switchTrack(--currentTrack);
 		}
 	});
 
 	$('.fastforward').on('click', function(){
-		if (shuffle === 'true'){
-			shufflePlay();
+		if (isShuffle){
+			shufflePlay(1);
 		} else {
 			switchTrack(++currentTrack);
 		}
@@ -165,7 +177,16 @@
 	$('#playlist li').each(function(i){
 		$(this).on('click', function(){
 			switchTrack(i);
-			currentTrack = i;
+			if (isShuffle) {
+				for (var j = 0; j < shuffleArray.length; j++) {
+					if (shuffleArray[j] === i) {
+						shuffleIndex = j;
+						break;
+					}
+				}
+			} else {
+			    currentTrack = i;
+			}
 		});
 	});
 
@@ -193,6 +214,29 @@
 		}
 	}); 
 
+	$("#player .cover").on('click',function(){
+		isShuffle = !isShuffle;
+		if (isShuffle) {
+	        $("#player .cover").attr("title","点击关闭随机播放");
+	        showToast('已开启随机播放');
+
+			var temp = [];
+			for (var i = 0; i < playlist.length; i++) {
+				temp[i] = i;
+			}
+			shuffleArray = shuffle(temp);
+			for (var j = 0; j < shuffleArray.length; j++) {
+				if (shuffleArray[j] === currentTrack) {
+					shuffleIndex = j;
+					break;
+				}
+			}
+		} else {
+	        $("#player .cover").attr("title","点击开启随机播放");
+	        showToast('已关闭随机播放');
+		}
+	});
+
 })(jQuery);
 
 
@@ -218,4 +262,26 @@ function isExceedTag() {
 	    isExceedTag = true;
 	}
 	return isExceedTag;
+}
+
+
+function shuffle(array) {
+    var m = array.length,
+        t, i;
+    // 如果还剩有元素…
+    while (m) {
+        // 随机选取一个元素…
+        i = Math.floor(Math.random() * m--);
+        // 与当前元素进行交换
+        t = array[m];
+        array[m] = array[i];
+        array[i] = t;
+    }
+    return array;
+}
+
+function showToast(info) {
+	var toastDiv = $('<div class="QplayerToast"></div>').text(info);
+	$('body').append(toastDiv);
+	$('.QplayerToast').show('fade').delay(2000).hide('fade', function(){$('.QplayerToast').remove()});
 }
