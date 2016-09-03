@@ -4,7 +4,7 @@
  * 
  * @package QPlayer
  * @author Jrohy
- * @version 1.3
+ * @version 1.3.1
  * @link https://32mb.space
  */
 class QPlayer_Plugin implements Typecho_Plugin_Interface
@@ -55,15 +55,13 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
         $form->addInput($css);
 
         $js = new Typecho_Widget_Helper_Form_Element_Textarea('js', NULL, 
-'//改变列表的背景颜色(错开颜色)，开启请删除注释
-/*
-function bgChange(){
+'//改变列表的背景颜色(错开颜色)
+function bgChange() {
 	var lis= $(".lib");
 	for(var i=0; i<lis.length; i+=2)
 	lis[i].style.background = "rgba(246, 246, 246, 0.5)";
 }
 window.onload = bgChange;
-*/
 ', _t('自定义JS'),'');
         $form->addInput($js);
 
@@ -120,7 +118,7 @@ window.onload = bgChange;
 			<div id="QPlayer" style="z-index:2016">
 			<div id="pContent">
 				<div id="player">
-					<span class="cover"></span>
+					<span class="cover" title="点击开启随机播放"></span>
 					<div class="ctrl">
 						<div class="musicTag marquee">
 							<strong>Title</strong>

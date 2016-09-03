@@ -43,6 +43,7 @@
 #player .cover img {
 	height:100%;
 	border-radius:99%;
+	cursor:pointer;
 }
 .contr {
 	text-align:center;
@@ -261,4 +262,16 @@ to {
 #player .ctrl .icon,#playlist li,#playlist li:hover:before, #playlist li:hover:after {
     transition: .2s;
     -webkit-font-smoothing: antialiased;
+}
+
+.QplayerToast {
+	background: #323232;
+	font-size: 14px;
+	color: white;
+	padding: 10px 15px;
+	position: fixed;
+	top:10%;
+	right: 10%;
+	display: none;
+	z-index: 2016;
 }
