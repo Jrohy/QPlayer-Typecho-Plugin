@@ -283,5 +283,5 @@ function shuffle(array) {
 function showToast(info) {
 	var toastDiv = $('<div class="QplayerToast"></div>').text(info);
 	$('body').append(toastDiv);
-	$('.QplayerToast').show('fade').delay(2000).hide('fade', function(){$('.QplayerToast').remove()});
+	$('.QplayerToast').fadeIn().delay(2000).fadeOut('normal', function(){$('.QplayerToast').remove()});
 }

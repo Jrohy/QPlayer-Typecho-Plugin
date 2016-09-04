@@ -4,7 +4,7 @@
  * 
  * @package QPlayer
  * @author Jrohy
- * @version 1.3.1
+ * @version 1.3.2
  * @link https://32mb.space
  */
 class QPlayer_Plugin implements Typecho_Plugin_Interface
@@ -170,7 +170,6 @@ window.onload = bgChange;
               ];
               var isRotate = '.$options->rotate.';
             </script> ' . "\n";
-		echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/jquery-ui.min.js"></script>' . "\n";
         echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/jquery.marquee.min.js"></script>' . "\n";
         echo '<script  src="'.Helper::options()->pluginUrl . '/QPlayer/js/player.js"></script>' . "\n";
         if ($options->js != '') {
