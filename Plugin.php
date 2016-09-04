@@ -4,7 +4,7 @@
  * 
  * @package QPlayer
  * @author Jrohy
- * @version 1.3.1
+ * @version 1.3.2
  * @link https://32mb.space
  */
 class QPlayer_Plugin implements Typecho_Plugin_Interface
@@ -50,6 +50,9 @@ class QPlayer_Plugin implements Typecho_Plugin_Interface
         'rotate', array('0'=> '关闭', '1'=> '开启'), 0, '封面旋转',
             '');
         $form->addInput($rotate);
+
+        $color = new Typecho_Widget_Helper_Form_Element_Text('color', NULL, '', _t('自定义主色调'), _t('默认为<span style="color: #1abc9c;">#1abc9c</span>, 你可以自定义任何你喜欢的颜色作为播放器主色调。自定义主色调支持css的设置格式，如: `#233333`,"rgb(255,255,255)","rgba(255,255,255,1)","hsl(0, 0%, 100%)","hsla(0, 0%, 100%,1)"。填写其他错误的格式可能不会生效。'));
+        $form->addInput($color);
 
         $css = new Typecho_Widget_Helper_Form_Element_Textarea('css', NULL, '', _t('自定义CSS'),'');
         $form->addInput($css);
@@ -145,7 +148,16 @@ window.onload = bgChange;
 			<ol id="playlist"></ol>
 			</div>
              ';
-
+        if($options->color != '') {
+            echo '<style>
+            #pContent .ssBtn {
+                background-color:'.$options->color.';
+            }
+            #playlist li.playing, #playlist li:hover{
+                border-left-color:'.$options->color.';
+            }
+            </style>';
+        }
         if($options->css != '') {
             echo '<style>'.$options->css.'</style>' . "\n";
         }
