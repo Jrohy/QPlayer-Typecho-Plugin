@@ -11,7 +11,7 @@
 	// Load playlist
 	for (var i = 0; i < playlist.length; i++){
 		var item = playlist[i];
-		$('#playlist').append('<li class="lib"><strong style="margin-left: 5px;">'+item.title+'</strong><span style="float: right;" class="artist">'+item.artist+'</span></li>');
+		$('#playlist').append('<li class="lib" style="overflow:hidden;"><strong style="margin-left: 5px;">'+item.title+'</strong><span style="float: right;" class="artist">'+item.artist+'</span></li>');
 	}
 
     //判断是否显示滚动条
