@@ -4,9 +4,12 @@
 		volume = localStorage.volume || 0.5,
 		continous = true,
 		isShuffle = false,
+		isShowNotification = false,
 		isFirstPlay = true,
 		shuffleArray = [],
-		shuffleIndex;
+		shuffleIndex,
+		autoClearTimer,
+		autoShowTimer;
 
 	// Load playlist
 	for (var i = 0; i < playlist.length; i++){
@@ -218,7 +221,7 @@
 		isShuffle = !isShuffle;
 		if (isShuffle) {
 	        $("#player .cover").attr("title","点击关闭随机播放");
-	        showToast('已开启随机播放');
+	        showNotification('已开启随机播放');
 
 			var temp = [];
 			for (var i = 0; i < playlist.length; i++) {
@@ -233,7 +236,7 @@
 			}
 		} else {
 	        $("#player .cover").attr("title","点击开启随机播放");
-	        showToast('已关闭随机播放');
+	        showNotification('已关闭随机播放');
 		}
 	});
 
@@ -280,8 +283,43 @@ function shuffle(array) {
     return array;
 }
 
-function showToast(info) {
-	var toastDiv = $('<div class="QplayerToast"></div>').text(info);
-	$('body').append(toastDiv);
-	$('.QplayerToast').fadeIn().delay(2000).fadeOut('normal', function(){$('.QplayerToast').remove()});
+function showNotification(info) {
+	isShowNotification = true;
+	//判断通知是否存在，存在就移除
+    if ($('.qplayer-notification').length>0) {
+    	$('.qplayer-notification').remove();
+    	clearTimeout(autoClearTimer);
+    	clearTimeout(autoShowTimer);
+    }
+	$('body').append('<div class="qplayer-notification animation-target"><span class="qplayer-notification-icon">i</span><span class="body" style="box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 5px;"><span class="message"></span></span><a class="close" href="#" onclick="closeNotification();return false;">×</a><div style="clear: both"></div>');
+	$('.qplayer-notification .message').text(info);
+	//用width:auto来自动获取通知栏宽度
+	var width = $('.qplayer-notification').css({"opacity":"0", "width":"auto"}).width() + 20;
+	$('.qplayer-notification').css({"width":"50px","opacity":"1"});
+	
+	autoShowTimer = setTimeout(function(){
+		$('.qplayer-notification').css({"width":width,"transition":"all .7s ease"});
+		$('.qplayer-notification .close').delay(500).show(0);
+	},1500);
+	autoClearTimer = setTimeout("if ($('.qplayer-notification').length>0) {closeNotification()}",8000);
+}
+
+
+function closeNotification() {
+	isShowNotification = false;
+	$('.qplayer-notification').css({"width":"50px","transition":"all .7s ease"});
+	$('.qplayer-notification .close').delay(500).hide(0);
+	setTimeout(function(){
+		if (!isShowNotification) {
+			$('.qplayer-notification').css("opacity","0");
+			$('.qplayer-notification-icon').css({"transform":"scale(0)","transition":"transform .5s ease"});
+	    }
+	},1000);
+	setTimeout(function(){
+		if (!isShowNotification) {
+			$('.qplayer-notification').remove();
+		}
+	},1500);
+    clearTimeout(autoClearTimer);
+    clearTimeout(autoShowTimer);
 }
