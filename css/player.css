@@ -23,7 +23,6 @@
 	box-sizing:border-box;
 }
 #player .cover {
-	background:rgba(0,0,0,0.5);
 	border:0px solid #333;
 	position:absolute;
 	left:0px;
@@ -414,3 +413,53 @@ to {
   100% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); } 
 }
 
+.qplayer_tips{
+  width:210px;
+  height: 0;
+  font-family:none !important;
+  text-align:center;
+  background:#9BCD9B;
+  position:fixed;
+  margin:30px;
+  color: #fff;
+  border-radius: 0.5em;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 9999999;
+}
+
+/*箭頭下-邊框*/
+.qplayer_tips .tips_arrow{
+  border-width:0;
+  border-style:solid;
+  border-color:#9BCD9B transparent transparent transparent;
+  position:absolute;
+  bottom:-29px;
+  left:17px;
+}
+
+.qplayer_tips .tips_button {
+  height: 0;
+  padding: 0;
+  width: 58px;
+  position: absolute;
+  bottom: 7px;
+  right: 7px;
+  border:0;
+  color: #fff;
+  background-color: transparent;
+  border:1px dashed rgba(0,0,0,0.15);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
+  font-family:none !important;
+}
+
+.qplayer_tips .tips_button:hover {
+    box-shadow: 0 0 10px #fff;
+}
+
+.qplayer_tips .info{
+  padding: 20px;
+  display: table;
+}
