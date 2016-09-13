@@ -5,11 +5,13 @@
 		continous = true,
 		isShuffle = false,
 		isShowNotification = false,
-		isFirstPlay = true,
+		isInitMarquee = true,
 		shuffleArray = [],
 		shuffleIndex,
 		autoClearTimer,
-		autoShowTimer;
+		autoShowTimer,
+		isFirstPlay = localStorage.qplayer == undefined? true: false,
+		isEdge = navigator.userAgent.toLowerCase().indexOf('edge') == -1?false:true;
 
 	// Load playlist
 	for (var i = 0; i < playlist.length; i++){
@@ -34,14 +36,16 @@
 		audio.play();
 		if (isRotate) {
 			$("#player .cover img").css("animation","9.8s linear 0s normal none infinite rotate");
+		    $("#player .cover img").css("animation-play-state","running");
 	    }
 		$('.playback').addClass('playing');
 		timeout = setInterval(updateProgress, 500);
 		isPlaying = true;
-		if(isExceedTag()) {
-			if (isFirstPlay) {
+		//超过显示栏且非edge浏览器才会运行跑马灯
+		if(isExceedTag() && !isEdge) {
+			if (isInitMarquee) {
 				initMarquee();
-				isFirstPlay = false;
+				isInitMarquee = false;
 			} else {
 				$('.marquee').marquee('resume');
 		    }
@@ -54,7 +58,7 @@
 		$('.playback').removeClass('playing');
 		clearInterval(updateProgress);
 		isPlaying = false;
-		if(isExceedTag()) {
+		if(isExceedTag() && !isEdge) {
 			$('.marquee').marquee('pause');
 		}
 	}
@@ -81,7 +85,7 @@
 			track = i;
 		}
 
-		isFirstPlay = true;
+		isInitMarquee = true;
 		$('audio').remove();
 		loadMusic(track);
 		play();
@@ -209,8 +213,13 @@
 	$("#QPlayer .ssBtn").on('click', function(){
 		var mA = $("#QPlayer");
 		if ($('.ssBtn .adf').hasClass('on') === false) {
+			if (isFirstPlay) {
+			    setTimeout("showTips('#player .cover','点击封面开启(关闭)随机播放');", 500);
+			    isFirstPlay = !isFirstPlay;
+			    localStorage.qplayer = '';
+			}
 			mA.css("transform", "translateX(250px)");
-		    $('.ssBtn .adf').addClass('on')
+		    $('.ssBtn .adf').addClass('on');
 		} else {	
 			mA.css("transform", "translateX(0px)");
             $('.ssBtn .adf').removeClass('on') 	
@@ -322,4 +331,23 @@ function closeNotification() {
 	},1500);
     clearTimeout(autoClearTimer);
     clearTimeout(autoShowTimer);
+}
+
+
+function showTips(div, info) {
+	var box_height = 100;
+    if ($('.qplayer_tips').length == 0) {
+		$('body').append('<div class="qplayer_tips"><span class="tips_arrow"></span><span class="info">' + info + '</span><button class="tips_button" onclick="removeTips()">不再提示</button></div>');
+		$('.qplayer_tips').css({"top":$(div).offset().top-box_height-30-15, "left": $(div).offset().left-28});
+		$('.qplayer_tips').css({"height":box_height,"transition":"all .5s ease-in-out"});
+		$('.tips_arrow').css({"border-width":"15px","transition":"all .5s ease-in-out"});
+		$('.tips_button').css({"height":"30px","transition":"all .5s ease-in-out"});
+	}
+}
+
+function removeTips() {
+	$('.qplayer_tips').css({"height":"0","transition":"all .5s ease-in-out"});
+	$('.tips_arrow').css({"border-width":"0","transition":"all .5s ease-in-out"});
+	$('.tips_button').css({"opacity":"0","transition":"all .2s ease-in-out"});
+	setTimeout(function(){$('.qplayer_tips').remove()}, 500);
 }
