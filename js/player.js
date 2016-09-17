@@ -1,9 +1,6 @@
 (function($){
 	// Settings
-	var repeat = localStorage.repeat || 0,
-		volume = localStorage.volume || 0.5,
-		continous = true,
-		isShuffle = false,
+	var isShuffle = false,
 		isShowNotification = false,
 		isInitMarquee = true,
 		shuffleArray = [],
@@ -28,9 +25,7 @@
 		$('#playlist').css("overflow", "auto");
 	}
 
-	var currentTrack = 0,
-		trigger = false,
-		audio, timeout, isPlaying, playCounts;
+	var currentTrack = 0, audio, timeout;
 
 	var play = function(){
 		audio.play();
@@ -40,7 +35,6 @@
 	    }
 		$('.playback').addClass('playing');
 		timeout = setInterval(updateProgress, 500);
-		isPlaying = true;
 		//超过显示栏且非edge浏览器才会运行跑马灯
 		if(isExceedTag() && !isEdge) {
 			if (isInitMarquee) {
@@ -56,8 +50,7 @@
 		audio.pause();
 		$("#player .cover img").css("animation-play-state","paused");
 		$('.playback').removeClass('playing');
-		clearInterval(updateProgress);
-		isPlaying = false;
+		clearInterval(timeout);
 		if(isExceedTag() && !isEdge) {
 			$('.marquee').marquee('pause');
 		}
@@ -114,21 +107,12 @@
 	var ended = function(){
 		pause();
 		audio.currentTime = 0;
-		playCounts++;
-		if (continous == true) isPlaying = true;
-		if (repeat == 1){
-			play();
-		} else {
-			if (isShuffle){
-				shufflePlay(1);
-			} else {
-				if (repeat == 2){
-					switchTrack(++currentTrack);
-				} else {
-					if (currentTrack < playlist.length) switchTrack(++currentTrack);
-				}
-			}
+		if (isShuffle){
+			shufflePlay(1);
+		} else { 
+			if (currentTrack < playlist.length) switchTrack(++currentTrack);
 		}
+		
 	}
 
 	var beforeLoad = function(){
@@ -148,7 +132,6 @@
 		$('.musicTag').html('<strong>'+item.title+'</strong><span> - </span><span class="artist">'+item.artist+'</span>');
 		$('#playlist li').removeClass('playing').eq(i).addClass('playing');
 		audio = newaudio[0];
-		audio.volume = volume;
 		audio.addEventListener('progress', beforeLoad, false);
 		audio.addEventListener('durationchange', beforeLoad, false);
 		audio.addEventListener('canplay', afterLoad, false);
