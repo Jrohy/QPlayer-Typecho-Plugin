@@ -24,6 +24,6 @@ Download ZIP, 解压，将 QPlayer-Typecho-Plugin-master 重命名为 QPlayer �
 
 
  [1]: https://32mb.space/usr/uploads/2016/08/858331127.png
- [2]: https://32mb.space/usr/uploads/2016/08/1109656363.png
+ [2]: https://32mb.space/usr/uploads/2016/09/585694551.png
  [3]: https://32mb.space/archives/7.html
 
