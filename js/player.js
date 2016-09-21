@@ -1,14 +1,13 @@
 (function($){
 	// Settings
-	var isShuffle = false,
-		isShowNotification = false,
+	var isShowNotification = false,
 		isInitMarquee = true,
 		shuffleArray = [],
 		shuffleIndex,
 		autoClearTimer,
 		autoShowTimer,
 		isFirstPlay = localStorage.qplayer == undefined? true: false,
-		isEdge = navigator.userAgent.toLowerCase().indexOf('edge') == -1?false:true;
+		isShuffle = localStorage.qplayer == undefined? false: localStorage.qplayer === 'true'? true: false;
 
 	// Load playlist
 	for (var i = 0; i < playlist.length; i++){
@@ -16,16 +15,34 @@
 		$('#playlist').append('<li class="lib" style="overflow:hidden;"><strong style="margin-left: 5px;">'+item.title+'</strong><span style="float: right;" class="artist">'+item.artist+'</span></li>');
 	}
 
-    //判断是否显示滚动条
+	var currentTrack = 0, audio, timeout;
+
+	if (isShuffle) {
+		var temp = localStorage.qplayer_shuffle_array;
+		if (temp != undefined) {
+			shuffleArray = JSON.parse(temp);
+			currentTrack = shuffleArray[0];
+			shuffleIndex = 0;
+	    } else {
+	    	isShuffle = false;
+	    }
+	}
+
+	//判断是否显示滚动条
 	var totalHeight = 0;
 	for (var i = 0; i < playlist.length; i++){
 		totalHeight += ($('#playlist li').eq(i).height() + 6);
 	}
 	if (totalHeight > 360) {
 		$('#playlist').css("overflow", "auto");
-	}
-
-	var currentTrack = 0, audio, timeout;
+		if (isShuffle) {
+			var temp = 0;
+			for (var j = 0; j < currentTrack; j++) {
+				temp += ($('#playlist li').eq(j).height() + 6);
+			}
+			$('#playlist').scrollTop(temp);
+		}
+	} 
 
 	var play = function(){
 		audio.play();
@@ -35,8 +52,8 @@
 	    }
 		$('.playback').addClass('playing');
 		timeout = setInterval(updateProgress, 500);
-		//超过显示栏且非edge浏览器才会运行跑马灯
-		if(isExceedTag() && !isEdge) {
+		//超过显示栏运行跑马灯
+		if(isExceedTag()) {
 			if (isInitMarquee) {
 				initMarquee();
 				isInitMarquee = false;
@@ -51,7 +68,7 @@
 		$("#player .cover img").css("animation-play-state","paused");
 		$('.playback').removeClass('playing');
 		clearInterval(timeout);
-		if(isExceedTag() && !isEdge) {
+		if(isExceedTag()) {
 			$('.marquee').marquee('pause');
 		}
 	}
@@ -199,7 +216,7 @@
 			if (isFirstPlay) {
 			    setTimeout("showTips('#player .cover','点击封面开启(关闭)随机播放');", 500);
 			    isFirstPlay = !isFirstPlay;
-			    localStorage.qplayer = '';
+			    localStorage.qplayer = 'false';
 			}
 			mA.css("transform", "translateX(250px)");
 		    $('.ssBtn .adf').addClass('on');
@@ -226,10 +243,13 @@
 					break;
 				}
 			}
+			localStorage.qplayer_shuffle_array = JSON.stringify(shuffleArray);
 		} else {
 	        $("#player .cover").attr("title","点击开启随机播放");
 	        showNotification('已关闭随机播放');
+	        localStorage.removeItem('qplayer_shuffle_array');
 		}
+		localStorage.qplayer = isShuffle;
 	});
 
 })(jQuery);
