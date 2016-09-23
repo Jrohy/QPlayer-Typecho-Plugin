@@ -214,7 +214,7 @@
 		var mA = $("#QPlayer");
 		if ($('.ssBtn .adf').hasClass('on') === false) {
 			if (isFirstPlay) {
-			    setTimeout("showTips('#player .cover','点击封面开启(关闭)随机播放');", 500);
+			    setTimeout("showTips('#player .cover','点击封面开启(关闭)随机播放', " + function(){setTimeout("showTips('#player .ctrl .musicTag','点击拖动标题栏快进(快退)')", 1000)} + ");", 500);
 			    isFirstPlay = !isFirstPlay;
 			    localStorage.qplayer = 'false';
 			}
@@ -251,6 +251,29 @@
 		}
 		localStorage.qplayer = isShuffle;
 	});
+
+
+    var startX, endX;
+    $('#player .ctrl .musicTag').mousedown(function(event){
+    	startX = event.screenX;
+    }).mousemove(function(event){
+    	//鼠标左键
+    	if (event.which === 1) {
+	    	endX = event.screenX;
+	    	var seekRange = Math.round((endX - startX) / 678 * 100);
+	    	audio.currentTime += seekRange;
+	    	setProgress(audio.currentTime);
+	    }
+    });
+
+    $('#player .ctrl .musicTag').bind('touchstart', function(event){
+    	startX = event.originalEvent.targetTouches[0].screenX;
+    }).bind('touchmove',function(event){
+    	endX = event.originalEvent.targetTouches[0].screenX;
+    	var seekRange = Math.round((endX - startX) / 678 * 100);
+    	audio.currentTime += seekRange;
+    	setProgress(audio.currentTime);
+    });
 
 })(jQuery);
 
@@ -336,19 +359,26 @@ function closeNotification() {
     clearTimeout(autoShowTimer);
 }
 
-
-function showTips(div, info) {
+/*
+*div: 要在其上面显示tip的div
+*info: tip内容
+*func: 不再提示按钮的click绑定函数
+*/
+function showTips(div, info, func) {
 	var box_height = 100;
-    if ($('.qplayer_tips').length == 0) {
-		$('body').append('<div class="qplayer_tips"><span class="tips_arrow"></span><span class="info">' + info + '</span><button class="tips_button" onclick="removeTips()">不再提示</button></div>');
-		$('.qplayer_tips').css({"top":$(div).offset().top-box_height-30-15, "left": $(div).offset().left-28});
-		$('.qplayer_tips').css({"height":box_height,"transition":"all .5s ease-in-out"});
-		$('.tips_arrow').css({"border-width":"15px","transition":"all .5s ease-in-out"});
-		$('.tips_button').css({"height":"30px","transition":"all .5s ease-in-out"});
+	$('body').append('<div class="qplayer_tips"><span class="tips_arrow"></span><span class="info" style="display:none">' + info + '</span><button class="tips_button" onclick="removeTips()">不再提示</button></div>');
+	$('.qplayer_tips').css({"top":$(div).offset().top-box_height-30-15, "left": $(div).offset().left-28});
+	$('.qplayer_tips').css({"height":box_height,"transition":"all .5s ease-in-out"});
+	$('.qplayer_tips .info').delay(500).fadeIn();
+	$('.tips_arrow').css({"border-width":"15px","transition":"all .5s ease-in-out"});
+	$('.tips_button').css({"height":"30px","transition":"all .5s ease-in-out"});
+	if (func != undefined) {
+		$('.tips_button').click(func);
 	}
 }
 
 function removeTips() {
+	$('.qplayer_tips .info').fadeOut();
 	$('.qplayer_tips').css({"height":"0","transition":"all .5s ease-in-out"});
 	$('.tips_arrow').css({"border-width":"0","transition":"all .5s ease-in-out"});
 	$('.tips_button').css({"opacity":"0","transition":"all .2s ease-in-out"});
