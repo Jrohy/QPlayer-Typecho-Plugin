@@ -121,7 +121,7 @@ window.onload = bgChange;
 			<div id="QPlayer" style="z-index:2016">
 			<div id="pContent">
 				<div id="player">
-					<span class="cover" title="点击开启随机播放"></span>
+					<span class="cover"></span>
 					<div class="ctrl">
 						<div class="musicTag marquee">
 							<strong>Title</strong>

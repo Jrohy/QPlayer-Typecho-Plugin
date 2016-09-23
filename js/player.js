@@ -26,6 +26,9 @@
 	    } else {
 	    	isShuffle = false;
 	    }
+	    $('#QPlayer .cover').attr('title', '点击关闭随机播放');
+	} else {
+	    $('#QPlayer .cover').attr('title', '点击开启随机播放');
 	}
 
 	//判断是否显示滚动条
