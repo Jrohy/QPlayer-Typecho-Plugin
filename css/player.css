@@ -57,6 +57,13 @@
 	color:#636363;
 	padding:8px;
 }
+#player .ctrl .musicTag {
+	cursor: ew-resize;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
 #player .ctrl .musicTag strong,#player .ctrl .musicTag span {
 	display:inline;
 	font-size:85%;
