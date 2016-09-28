@@ -16,18 +16,14 @@
 	}
 
 	var currentTrack = 0, audio, timeout;
+	var shuffle_array = localStorage.qplayer_shuffle_array;
 
-	if (isShuffle) {
-		var temp = localStorage.qplayer_shuffle_array;
-		if (temp != undefined) {
-			shuffleArray = JSON.parse(temp);
-			currentTrack = shuffleArray[0];
-			shuffleIndex = 0;
-	    } else {
-	    	isShuffle = false;
-	    }
+	if (isShuffle && shuffle_array != undefined && playlist.length === (shuffleArray=JSON.parse(shuffle_array)).length) {
+		currentTrack = shuffleArray[0];
+		shuffleIndex = 0;
 	    $('#QPlayer .cover').attr('title', '点击关闭随机播放');
 	} else {
+		isShuffle = false;
 	    $('#QPlayer .cover').attr('title', '点击开启随机播放');
 	}
 
