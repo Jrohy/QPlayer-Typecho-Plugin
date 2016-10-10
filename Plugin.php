@@ -74,8 +74,7 @@ window.onload = bgChange;
         $form->addInput($getMusic);
 
         $musicList = new Typecho_Widget_Helper_Form_Element_Textarea('musicList', NULL, 
-'
-{
+'{
     title:"叫做你的那个人",
     artist:"Jessica",
     mp3:"http://p2.music.126.net/N5MyzQh73z5KRqhmQe_WPg==/5675679022587512.mp3",
