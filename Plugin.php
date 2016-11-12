@@ -68,11 +68,6 @@ window.onload = bgChange;
 ', _t('自定义JS'),'');
         $form->addInput($js);
 
-        $getMusic = new Typecho_Widget_Helper_Form_Element_Radio('getMusic',NULL,NULL,_t('添加网易云音乐(主机需支持curl扩展)'),_t('
-        	<div style="background-color:#467b96;padding:5px 8px;max-width:110px;border-radius: 2px;"><a href="'.Helper::options()->pluginUrl.'/QPlayer/IDExplain.php" target="_blank" style="font-size:14px;color:#fff;outline:none;text-decoration:none;">网易云音乐id解析</a>
-        	</div>请自行去网易云音乐网页版获取音乐id(具体在每个音乐项目的网址最后会有个id)。<b>将解析出的音乐链接复制到下面歌曲列表里(注意检查与现有歌曲是否用英文,隔开)</b>'));
-        $form->addInput($getMusic);
-
         $musicList = new Typecho_Widget_Helper_Form_Element_Textarea('musicList', NULL, 
 '{
     title:"叫做你的那个人",
@@ -86,7 +81,8 @@ window.onload = bgChange;
     mp3:"http://p2.music.126.net/_W3MHbGYREJYhooqUCFw0w==/7936274929553895.mp3",
     cover:"http://p4.music.126.net/3-Xl4UGcpgl2I3YbbC3QFg==/2933497024962579.jpg?param=106x106",
 },
-',_t('歌曲列表'), _t('格式: {title:"xxx", artist:"xxx", cover:"http:xxxx", mp3:"http:xxxx"} ，每个歌曲之间用英文,隔开。请保证歌曲列表里至少有一首歌！'));
+',_t('歌曲列表'), _t('格式: {title:"xxx", artist:"xxx", cover:"http:xxxx", mp3:"http:xxxx"} ，每个歌曲之间用英文,隔开。请保证歌曲列表里至少有一首歌！<br><br><div style="background-color:#56A5CE;padding:5px 8px;max-width:250px;border-radius: 2px;"><a href="'.Helper::options()->pluginUrl.'/QPlayer/IDExplain.php" target="_blank" style="font-size:14px;color:#fff;outline:none;text-decoration:none;">网易云音乐id解析(主机需支持curl扩展)</a>
+        	</div>请自行去网易云音乐网页版获取音乐id(具体在每个音乐项目的网址最后会有个id)。<b>将解析出的音乐链接复制到上面歌曲列表里(注意检查与现有歌曲是否用英文,隔开)</b>'));
         $form->addInput($musicList);
     }
     
