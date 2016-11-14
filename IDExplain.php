@@ -111,10 +111,10 @@
 <div id="title"><h1>网易云音乐id解析</h1></div>
 <div id="radiogroup">
 id类型:
-<input type="radio" name="type" class="mgr" value="song"  <?php if ($_POST['type']=="song" || $_POST['type'] == null) echo "checked";?>>单曲
+<input type="radio" name="type" class="mgr" value="collect"  <?php if ($_POST['type']=="collect" || $_POST['type'] == null) echo "checked";?>>歌单
 <input type="radio" name="type" class="mgr" value="album" <?php if ($_POST['type']=="album") echo "checked";?>>专辑
 <input type="radio" name="type" class="mgr" value="artist" <?php if ($_POST['type']=="artist") echo "checked";?>>艺人
-<input type="radio" name="type" class="mgr" value="collect" <?php if ($_POST['type']=="collect") echo "checked";?>>歌单
+<input type="radio" name="type" class="mgr" value="song" <?php if ($_POST['type']=="song") echo "checked";?>>单曲(需国内服务器)
 </div>
 <br>
 <div id="inputform">
