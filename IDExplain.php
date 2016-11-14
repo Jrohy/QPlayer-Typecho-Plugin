@@ -201,10 +201,11 @@ id输入:&nbsp;<input type="text" id="input" placeholder="多个id用英文,分�
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $input = $_POST["id"];
+    $type = $_POST["type"];
     $resultList = explode(",", $input);
     $result="";
     foreach ($resultList as $key => $value) {
-        $musicList = get_netease_music($value,$type=$_POST["type"]);
+        $musicList = get_netease_music($value,$type);
         foreach($musicList as $x=>$x_value) {
             $result .= "{";
             foreach ($x_value as $key => $value) {
