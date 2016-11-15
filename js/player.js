@@ -13,6 +13,9 @@
 	for (var i = 0; i < playlist.length; i++){
 		var item = playlist[i];
 		$('#playlist').append('<li class="lib" style="overflow:hidden;"><strong style="margin-left: 5px;">'+item.title+'</strong><span style="float: right;" class="artist">'+item.artist+'</span></li>');
+		if (item.mp3 == "") {
+			$('#playlist li').eq(i).css('color', '#ddd');
+		}
 	}
 
 	var currentTrack = 0, audio, timeout;
@@ -142,8 +145,20 @@
 
 	// Load track
 	var loadMusic = function(i){
-		var item = playlist[i],
-		newaudio = $('<audio>').html('<source src="'+item.mp3+'"><source src="'+item.ogg+'">').appendTo('#player');
+		var item = playlist[i];
+		while (item.mp3 == "") {
+	        showNotification('歌曲地址为空，已自动跳过');
+			if (isShuffle) {
+				if (++shuffleIndex === shuffleArray.length) {
+			    	shuffleIndex = 0;
+			    }
+			    i = currentTrack = shuffleArray[shuffleIndex];
+			} else {
+				currentTrack = ++i;
+			}
+			item = playlist[i];
+		}
+		var newaudio = $('<audio>').html('<source src="'+item.mp3+'"><source src="'+item.ogg+'">').appendTo('#player');
 		$('.cover').html('<img src="'+item.cover+'" alt="'+item.album+'">');
 		$('.musicTag').html('<strong>'+item.title+'</strong><span> - </span><span class="artist">'+item.artist+'</span>');
 		$('#playlist li').removeClass('playing').eq(i).addClass('playing');
@@ -182,7 +197,6 @@
 	
 	$('#playlist li').each(function(i){
 		$(this).on('click', function(){
-			switchTrack(i);
 			if (isShuffle) {
 				for (var j = 0; j < shuffleArray.length; j++) {
 					if (shuffleArray[j] === i) {
@@ -193,6 +207,7 @@
 			} else {
 			    currentTrack = i;
 			}
+			switchTrack(i);
 		});
 	});
 
