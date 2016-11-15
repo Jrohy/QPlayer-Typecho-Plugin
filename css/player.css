@@ -162,6 +162,7 @@
 	cursor:pointer;
 	text-overflow:ellipsis;
 	list-style-position:inside;
+	list-style-type:decimal;
 	cursor:default;
 }
 #playlist li:hover {
